@@ -1,0 +1,10 @@
+import {body,db,HttpError,json,options,owner,publicSession,safe,session,validate} from '@/lib/data';
+type Context={params:Promise<{id:string}>};
+export function GET(request:Request,context:Context){return safe(async()=>{const user=await owner();const {id}=await context.params;const s=await session(id,user);const opts=await options(id) as any[];
+if(new URL(request.url).searchParams.get('export')==='csv'){const cell=(v:unknown)=>'"'+String(v??'').replace(/^[=+@\-\t\r]/,"'$&").replaceAll('"','""')+'"';const rows=[['Sesión','Pregunta','Creada UTC','Estado','Opción','Votos','Porcentaje'],...opts.map(o=>[s.title,s.question,s.created_at,s.status,o.label,o.count,s.total?(100*o.count/s.total).toFixed(2):'0'])];return new Response('\uFEFF'+rows.map(r=>r.map(cell).join(';')).join('\r\n'),{headers:{'Content-Type':'text/csv; charset=utf-8','Content-Disposition':'attachment; filename="palabra-viva-'+id+'.csv"','Cache-Control':'no-store'}})}
+return json({session:publicSession(s),options:opts})})}
+export function PATCH(request:Request,context:Context){return safe(async()=>{const user=await owner();const {id}=await context.params;await session(id,user);const p=await body(request);
+if(p.status!==undefined){if(!['open','closed'].includes(p.status))throw new HttpError(400,'Estado no válido.');await db().prepare('UPDATE sessions SET status=? WHERE id=? AND owner_id=?').bind(p.status,id,user).run();}
+else{const v=validate(p);const s=await session(id,user);if(s.status!=='draft')throw new HttpError(409,'Solo se pueden editar borradores.');await db().batch([db().prepare("UPDATE sessions SET title=?, question=? WHERE id=? AND owner_id=? AND status='draft'").bind(v.title,v.question,id,user),db().prepare("DELETE FROM options WHERE session_id=? AND EXISTS(SELECT 1 FROM sessions WHERE id=? AND status='draft')").bind(id,id),...v.options.map((label:string,i:number)=>db().prepare("INSERT INTO options (id,session_id,label,position) SELECT ?,?,?,? WHERE EXISTS(SELECT 1 FROM sessions WHERE id=? AND status='draft')").bind(crypto.randomUUID(),id,label,i,id))]);}
+return json({session:publicSession(await session(id,user))})})}
+

@@ -1,0 +1,11 @@
+node_modules
+.local
+.git
+.env
+.env.*
+dist
+backups
+ACCESO-LOCAL.txt
+.sites-runtime
+.wrangler
+

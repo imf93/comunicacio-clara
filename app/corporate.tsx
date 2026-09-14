@@ -1,0 +1,1 @@
+export default function CorporateHeader(){return <header className="corporate-header"><img className="council-logo" src="/ajuntament.png" alt="Ajuntament de Sant Boi de Llobregat"/><div className="clear-logo" role="img" aria-label="Comunicació Clara"><img src="/comunicacio-referencia.png" alt=""/></div></header>}
