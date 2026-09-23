@@ -36,7 +36,7 @@
 
 /* Projection designed for a room: compact identity and a readable fixed QR. */
 .corporate-projection .corporate-header,.corporate-projection:fullscreen .corporate-header{padding:10px 24px;background:#fff}
-.corporate-projection .parlem-logo,.corporate-projection:fullscreen .parlem-logo{width:105px;border-radius:8px}
+.corporate-projection .parlem-logo,.corporate-projection:fullscreen .parlem-logo{width:210px;max-width:30vh;border-radius:8px}
 .corporate-projection .projection-question,.corporate-projection:fullscreen .projection-question{padding:12px 28px 16px;font-size:clamp(26px,2.8vw,46px)}
 .corporate-projection .projection-content,.corporate-projection:fullscreen .projection-content{grid-template-columns:minmax(0,1fr) clamp(190px,21vw,310px);padding:0 24px 24px;gap:12px}
 .corporate-projection .projection-qr{border:1px solid #e9eae5;border-radius:16px;padding:8px;align-self:end;background:#fff}
