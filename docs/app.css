@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
 
 
@@ -23,5 +24,14 @@
 .cloud-arrival{animation:cloud-arrive 800ms cubic-bezier(.2,.7,.25,1) both;transform-box:fill-box;transform-origin:center}
 @keyframes cloud-arrive{from{opacity:0;transform:scale(.78)}to{opacity:1;transform:scale(1)}}
 @media(prefers-reduced-motion:reduce){.cloud-position,.corporate-cloud text{transition:none}.cloud-arrival{animation:none}}
+/* Parlem Clar public screens. Preserve the supplied artwork with a CSS crop. */
+.corporate-header,.corporate-projection .corporate-header,.corporate-projection:fullscreen .corporate-header{justify-content:center;background:#e9eae5;border-bottom:0;padding:16px;min-height:0}
+.parlem-logo{position:relative;overflow:hidden;width:200px;aspect-ratio:1.03}
+.parlem-logo img{position:absolute;width:230%;max-width:none;height:auto;left:-65%;top:-6%}
+.corporate-projection,.participant{font-family:Poppins,sans-serif}
+.projection-question,.participant h1{font-family:Poppins,sans-serif;color:#f28608;font-weight:700}
+.participant input,.participant button{font-family:inherit}
+.corporate-projection:fullscreen .parlem-logo{width:clamp(125px,19vh,200px)}
+@media(max-width:700px){.parlem-logo{width:155px}}
 
 .setup{max-width:760px;margin:50px auto;padding:24px;line-height:1.8}.vote-options{display:grid;gap:10px}.voteoption input{width:20px;height:20px;margin:0;flex-shrink:0}.voteoption:has(input:checked){background:#edf4fe;border-color:#1a73e8}.votecontainer label{display:block;margin-top:16px}.votecontainer .voteoption{display:flex}.votecontainer form>label{margin-top:20px}.sessionitem{overflow-wrap:anywhere}
